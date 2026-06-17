@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spousset — Real Property Equity Sales Platform</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; background: #111; color: #fff; }
+
+  /* ── NAV ── */
+  nav {
+    background: #0a1520;
+    padding: 1rem 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    border-bottom: 1px solid rgba(200,157,92,0.2);
+    gap: 1rem;
+  }
+  .nav-logo-left {
+    height: 34px;
+    object-fit: contain;
+    filter: brightness(0) saturate(100%) invert(72%) sepia(40%) saturate(600%) hue-rotate(5deg) brightness(95%);
+    justify-self: start;
+  }
+  .nav-brand-center {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .nav-brand-name {
+    font-family: Georgia, serif;
+    font-size: 1.9rem;
+    letter-spacing: 0.18em;
+    color: #c89d5c;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  .nav-brand-sub {
+    font-family: Arial, sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: #ffffff;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  .nav-tagline-right {
+    font-size: 0.6rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    justify-self: end;
+    text-align: right;
+    line-height: 1.6;
+  }
+
+  /* ── SPLIT HERO ── */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 90px 1fr;
+    min-height: 620px;
+    position: relative;
+  }
+
+  /* ── LEFT ── */
+  .hero-left {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 0 4rem 4rem;
+  }
+  /* Real house photo as background */
+  .hero-left::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=900&q=80');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.18;
+    filter: grayscale(30%);
+  }
+  /* Dark storm navy overlay */
+  .hero-left::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      135deg,
+      #060e16 0%,
+      #0d1f2d 40%,
+      rgba(13,31,45,0.85) 100%
+    );
+  }
+  .hero-left-content {
+    position: relative;
+    z-index: 2;
+  }
+  .eyebrow-left {
+    font-size: 0.6rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.28);
+    margin-bottom: 1.4rem;
+  }
+  .hero-left blockquote {
+    font-family: Georgia, serif;
+    font-size: clamp(1.5rem, 2.5vw, 2.1rem);
+    font-weight: 400;
+    line-height: 1.3;
+    color: rgba(255,255,255,0.88);
+    font-style: italic;
+    max-width: 360px;
+    margin-bottom: 1.2rem;
+  }
+  .hero-left blockquote strong {
+    font-style: normal;
+    color: #fff;
+    font-size: 1.08em;
+  }
+  .hero-left .sub-left {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.38);
+    line-height: 1.65;
+    max-width: 300px;
+    font-style: italic;
+  }
+
+  /* ── CENTER GLOW ── */
+  .hero-center {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+  .hero-center::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      to right,
+      #0d1f2d 0%,
+      transparent 45%,
+      transparent 55%,
+      #f0ddb8 100%
+    );
+    pointer-events: none;
+  }
+  .glow-wrap {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90px;
+    height: 90px;
+  }
+  .glow-pulse {
+    position: absolute;
+    width: 130px; height: 130px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(200,157,92,0.65) 0%,
+      rgba(200,157,92,0.25) 40%,
+      transparent 70%
+    );
+    filter: blur(6px);
+  }
+  .glow-ring-a {
+    position: absolute;
+    width: 108px; height: 108px;
+    border-radius: 50%;
+    border: 1px solid rgba(200,157,92,0.3);
+  }
+  .glow-ring-b {
+    position: absolute;
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    border: 1px solid rgba(200,157,92,0.5);
+  }
+  .center-logo-img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    position: relative;
+    z-index: 3;
+    filter: brightness(0) saturate(100%)
+            invert(72%) sepia(40%) saturate(600%)
+            hue-rotate(5deg) brightness(95%);
+  }
+
+  /* ── RIGHT ── */
+  .hero-right {
+    background: linear-gradient(
+      150deg,
+      #f5ead6 0%,
+      #f0ddb8 50%,
+      #e8d0a0 100%
+    );
+    padding: 5rem 4rem 5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-right::before {
+    content: '';
+    position: absolute;
+    top: -80px; left: -80px;
+    width: 350px; height: 350px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(200,157,92,0.18) 0%,
+      transparent 65%
+    );
+    pointer-events: none;
+  }
+  .eyebrow-right {
+    font-size: 0.6rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(160,120,48,0.7);
+    margin-bottom: 1.4rem;
+  }
+  .hero-right h1 {
+    font-family: Georgia, serif;
+    font-size: clamp(1.8rem, 2.8vw, 2.7rem);
+    font-weight: 400;
+    line-height: 1.12;
+    color: #2c1a0e;
+    margin-bottom: 0.3rem;
+  }
+  .hero-right h1 .gold-accent { color: #a07830; }
+  .gold-rule {
+    width: 44px; height: 2px;
+    background: #c89d5c;
+    margin: 1.3rem 0 1.4rem;
+  }
+  .hero-right .sub-r {
+    font-family: Georgia, serif;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: #5a3e28;
+    margin-bottom: 0.5rem;
+    line-height: 1.55;
+  }
+  .hero-right .power-r {
+    font-size: 0.8rem;
+    letter-spacing: 0.07em;
+    color: #a07830;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+
+  /* Email capture */
+  .email-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #8a6040;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  .email-row {
+    display: flex;
+    max-width: 370px;
+    margin-bottom: 0.6rem;
+  }
+  .email-row input {
+    flex: 1;
+    padding: 0.9rem 1.1rem;
+    background: rgba(255,255,255,0.65);
+    border: 1.5px solid rgba(160,120,48,0.4);
+    border-right: none;
+    color: #2c1a0e;
+    font-size: 0.84rem;
+    outline: none;
+    border-radius: 2px 0 0 2px;
+    font-family: Arial, sans-serif;
+  }
+  .email-row input::placeholder { color: rgba(44,26,14,0.38); }
+  .email-row button {
+    padding: 0.9rem 1.1rem;
+    background: #c89d5c;
+    color: #2c1a0e;
+    border: none;
+    font-size: 0.67rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 0 2px 2px 0;
+    white-space: nowrap;
+    line-height: 1.45;
+    text-align: center;
+  }
+  .early-note {
+    font-size: 0.7rem;
+    color: rgba(44,26,14,0.42);
+    font-style: italic;
+  }
+
+  /* ── DISCLOSURE ── */
+  .disclosure {
+    background: #0a1520;
+    border-left: 4px solid #c89d5c;
+    padding: 1.5rem 4rem;
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    border-top: 1px solid rgba(200,157,92,0.12);
+  }
+  .disc-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #c89d5c;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+    line-height: 1.8;
+  }
+  .disclosure p {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.42);
+    line-height: 1.7;
+  }
+
+  /* ── FEATURE CARDS ── */
+  .features {
+    background: #f7f3ed;
+    padding: 4rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    border-top: 1px solid rgba(200,157,92,0.15);
+  }
+  .feat {
+    border-top: 2px solid #c89d5c;
+    padding-top: 1.2rem;
+  }
+  .feat h4 {
+    color: #1a3a52;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  .feat p {
+    color: #5a7080;
+    font-size: 0.82rem;
+    line-height: 1.68;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #060e16;
+    padding: 2rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(200,157,92,0.12);
+  }
+  footer img {
+    height: 28px;
+    object-fit: contain;
+    filter: brightness(0) saturate(100%) invert(72%) sepia(40%) saturate(600%) hue-rotate(5deg) brightness(95%);
+  }
+  footer p {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.28);
+    text-align: right;
+    line-height: 1.8;
+  }
+
+  /* Preview badge */
+  .preview-badge {
+    background: #c89d5c;
+    color: #0a1520;
+    text-align: center;
+    padding: 0.55rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; grid-template-rows: auto 60px auto; }
+    .hero-center { min-height: 60px; }
+    .hero-center::before { background: linear-gradient(to bottom, #0d1f2d, transparent 40%, transparent 60%, #f0ddb8); }
+    nav { grid-template-columns: 1fr; text-align: center; gap: 0.5rem; }
+    .nav-logo-left, .nav-tagline-right { justify-self: center; }
+    .features { grid-template-columns: 1fr; padding: 2rem; }
+    .disclosure { padding: 1.2rem 2rem; flex-direction: column; gap: 0.5rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem; }
+    footer p { text-align: center; }
+    .hero-left { padding: 3rem 2rem; }
+    .hero-right { padding: 3rem 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="preview-badge">Spousset — Landing Page Preview V10 — For Review</div>
+
+<!-- NAV -->
+<nav>
+  <img class="nav-logo-left" src="spousset_logo_light.jpg" alt="Spousset logo">
+  <div class="nav-brand-center">
+    <span class="nav-brand-name">SPOUSSET</span>
+    <span class="nav-brand-sub">A New Solution for Divorcing Spouses</span>
+  </div>
+  <span class="nav-tagline-right"></span>
+</nav>
+
+<!-- SPLIT HERO -->
+<div class="hero">
+
+  <!-- LEFT — DARK / TRAPPED -->
+  <div class="hero-left">
+    <div class="hero-left-content">
+      <div class="eyebrow-left">Before Spousset</div>
+      <blockquote>
+        "Half the equity in this house<br>
+        is <strong>ALL I got."</strong>
+      </blockquote>
+      <p class="sub-left">"Without both signatures, your equity cash stays locked in — and so do you."</p>
+    </div>
+  </div>
+
+  <!-- CENTER — LOGO GLOW -->
+  <div class="hero-center">
+    <div class="glow-wrap">
+      <div class="glow-pulse"></div>
+      <div class="glow-ring-a"></div>
+      <div class="glow-ring-b"></div>
+      <img class="center-logo-img" src="spousset_logo_light.jpg" alt="Spousset">
+    </div>
+  </div>
+
+  <!-- RIGHT — WARM LUXURY / EMPOWERED -->
+  <div class="hero-right">
+    <div class="eyebrow-right">The Decision</div>
+    <p style="font-family:Georgia,serif; font-size:0.95rem; font-style:italic; color:#5a3e28; margin-bottom:1rem; line-height:1.5;">For the spouse who helped build everything.</p>
+    <h1>Don't sell it.<br><span class="gold-accent">Just Spousset it.</span></h1>
+    <div class="gold-rule"></div>
+    <p class="sub-r">"Your equity. Your decision. Your cash. Your exit."</p>
+    <p class="power-r">You don't need their permission.<br>You need Spousset.</p>
+
+    <span class="email-label">Build Your Equity Exit Plan</span>
+    <div class="email-row">
+      <input type="email" placeholder="your@email.com">
+      <button>Register<br>Now</button>
+    </div>
+    <p class="early-note">Get your equity out in cash — privately, quickly, on your terms.</p>
+  </div>
+
+</div>
+
+<!-- FEATURE CARDS -->
+<div class="features">
+  <div class="feat">
+    <h4>No Bank Required</h4>
+    <p>Private equity transfer between individuals. No refinance. No lender approval. No waiting on bank timelines.</p>
+  </div>
+  <div class="feat">
+    <h4>No Cooperation Required</h4>
+    <p>Your equity is your legally owned asset. No one has the right to block you from selling what is yours.</p>
+  </div>
+  <div class="feat">
+    <h4>Complete Anonymity</h4>
+    <p>Your transaction remains known only to Spousset, the seller, and the investor — permanently.</p>
+  </div>
+</div>
+
+<!-- RESIDENCY DISCLOSURE -->
+<div class="disclosure">
+  <span class="disc-label">Important<br>Disclosure</span>
+  <p>Spousset transactions are private equity transfers only. Selling your equity share does not require either spouse to vacate the property, does not transfer occupancy rights, and does not affect residency arrangements. Residency is determined solely by the divorce court. Spousset does not provide legal advice. Both parties are encouraged to retain independent legal counsel.</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <img src="spousset_logo_light.jpg" alt="Spousset">
+  <p>
+    Real Property Equity Sales Platform<br>
+    Now accepting registrations nationwide &nbsp;·&nbsp; Spousset.com<br>
+    © 2026 Spousset. All rights reserved.
+  </p>
+</footer>
+
+</body>
+</html>
